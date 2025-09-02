@@ -18,7 +18,7 @@ export interface User extends BaseEntity{
     lastAcvtivity: string;
 }
 
-// Table Types
+ 
 export interface TableColumn<T = any> {
   key: keyof T;
   label: string;
@@ -40,7 +40,7 @@ export interface PaginatedResponse<T = any> {
   hasMore: boolean;
 }
 
-// Component Props Types
+ 
 export interface BaseComponentProps {
   className?: string;
   children?: React.ReactNode;
