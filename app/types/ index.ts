@@ -18,7 +18,7 @@ export interface User extends BaseEntity{
     lastAcvtivity: string;
 }
 
-// Table Types
+ 
 export interface TableColumn<T = any> {
   key: keyof T;
   label: string;
