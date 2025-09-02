@@ -40,7 +40,7 @@ export interface PaginatedResponse<T = any> {
   hasMore: boolean;
 }
 
-// Component Props Types
+ 
 export interface BaseComponentProps {
   className?: string;
   children?: React.ReactNode;
