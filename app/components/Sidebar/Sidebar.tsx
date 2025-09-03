@@ -293,7 +293,7 @@ const Sidebar = ({ isOpen = true, onToggle } : any) => {
                   {/* Status Filter */}
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Status</label>
-                    <div className="space-y-2">
+                    <div className="space-y-2 flex flex-col gap-1.5" style={{padding:'10px'}} >
                       {['active', 'inactive', 'pending'].map((status) => (
                         <label key={status} className="flex items-center space-x-2 cursor-pointer">
                           <input
@@ -303,6 +303,7 @@ const Sidebar = ({ isOpen = true, onToggle } : any) => {
                             checked={filters.status === status}
                             onChange={(e) => handleFilterChange('status', e.target.value)}
                             className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 focus:ring-blue-500"
+                            
                           />
                           <span className="text-sm text-gray-300 capitalize">{status}</span>
                         </label>
