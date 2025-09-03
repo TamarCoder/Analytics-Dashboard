@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { Bell, Search, Settings, User, Menu, X } from "lucide-react";
 
+
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");

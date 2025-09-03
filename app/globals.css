@@ -122,6 +122,12 @@ html {
   scroll-behavior: smooth;
 }
 
+button{
+  cursor: pointer;
+  padding: 12px;
+}
+ 
+
 body {
   background-color: var(--color-gray-950);
   color: var(--color-gray-100);
