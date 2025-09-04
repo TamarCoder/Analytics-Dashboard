@@ -1,164 +1,132 @@
 "use client";
 import React, { useState } from "react";
-import { Bell, Search, Settings, User, Menu, X } from "lucide-react";
+import {
+  BarChart3,
+  Bell,
+  Search,
+  Settings,
+  User,
+  ChevronDown,
+} from "lucide-react";
 
-
-
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+const Header: React.FC = () => {
+  const [isSearchText, setIsSearchText] = useState("");
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const handleSearchChange = (e: any) => {
-    setSearchQuery(e.target.value);
+    console.log(e.target.value);
+    setIsSearchText(e.target.value);
+  };
+
+  const handleNotificationToggle = () => {
+    setIsNotificationOpen(!isNotificationOpen);
+  };
+
+  const handleUserMenuToggle = () => {
+    setIsUserMenuOpen(!isUserMenuOpen);
   };
 
   return (
-    <header
-      className="bg-gray-900 border-b border-gray-800 px-4 lg:px-6 h-20 flex items-center justify-between relative z-50"
-      style={{ padding: "24px" }}
-    >
-      <div className="flex gap-[10px] items-center space-x-4 ">
-        <button
-          onClick={toggleMenu}
-          className="lg:hidden p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition-colors duration-200"
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-
-        <div className="flex gap-[10px] items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">A</span>
+    <header className="bg-gray-900 border-b border-gray-700 px-6 py-4">
+      <div className="flex items-center justify-between">
+        {/* {logo  and title} */}
+        <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3">
+            <BarChart3 className="h-6 w-6 text-white cursor-pointer" />
           </div>
-          <h1 className="text-xl font-semibold text-white hidden sm:block">
-            Analytics
-          </h1>
-        </div>
-      </div>
 
-      <div className="hidden md:flex flex-2 max-w-lg mx-8">
-        <div className="relative w-full">
-         
-          <Search
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10 pointer-events-none"
-            size={20}
-          />
+          <div>
+            <h1 className="text-xl font-bold text-white">
+              Analytics Dashboard
+            </h1>
+            <p className="text-sm text-gray-400">Real-time business insights</p>
+          </div>
+        </div>
+
+        {/* {Search bar} */}
+
+        <div className="hidden md:flex items-center bg-gray-800 rounded-lg px-4 py-2 max-w-md flex-1 mx-8">
+          <Search className="h-5 w-5 text-gray-400 mr-3 cursor-pointer" />
           <input
-            type="text"
-            value={searchQuery}
             onChange={handleSearchChange}
-            placeholder="Search analytics..."
-            className="w-full h-[40px] pl-12 pr-10 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-            style={{
-              paddingLeft: "35px",
-            }}
+            value={isSearchText}
+            type="text"
+            placeholder="Search metrics, reports..."
+            className="bg-transparent text-white placeholder-gray-400 flex-1 outline-none"
           />
-          {/* თუ რამე იწერება, ვაჩვენებთ გასუფთავების ღილაკს */}
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+        </div>
+
+        {/* Actions */}
+        <div className="flex items-center space-x-4">
+          <button className="p-2 cursor-pointer text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-all duration-200">
+            <Bell
+              className="h-5 w-5 cursor-pointer"
+              onClick={handleNotificationToggle}
+            />
+          </button>
+          {/* Notifications dropdown  */}
+          {isNotificationOpen && (
+            <div
+              className="absolute right-55 top-16 w-64 bg-gray-800 text-white rounded-lg shadow-lg z-50 flex flex-col gap-2.5 justify-between"
+              style={{
+                padding: "10px",
+              }}
             >
-              <X size={16} />
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className="flex gap-[20px] items-center space-x-3">
-        {/* შეტყობინებების ღილაკი */}
-        <button className="relative p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition-colors duration-200">
-          <Bell size={20} className="cursor-pointer" />
-          <span className="absolute top-[-3px] right-0 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
-        </button>
-
-        {/* პარამეტრების ღილაკი */}
-        <button className="p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition-colors duration-200">
-          <Settings size={20} className="cursor-pointer" />
-        </button>
-
-        {/* მომხმარებლის პროფილი */}
-        <div className="flex gap-[20px] items-center space-x-3 pl-3   border-gray-700">
-          <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center">
-            <User size={16} className="text-white cursor-pointer" />
-          </div>
-          <div className="hidden lg:block cursor-pointer">
-            <p className="text-sm font-medium text-white  cursor-pointer">
-              John Doe
-            </p>
-            <p className="text-xs text-gray-400 cursor-pointer">Admin</p>
-          </div>
-        </div>
-      </div>
-
-      {/* მობილური მენიუ - ჩანს მხოლოდ მობილურზე და მენიუს გახსნისას */}
-      {isMenuOpen && (
-        <>
-          <div
-            className="fixed inset-0   bg-opacity-50 lg:hidden z-40"
-            onClick={toggleMenu}
-          ></div>
-
-          {/* მენიუ */}
-          <div
-            className="absolute top-full   gap-[20px] left-0 right-0 bg-gray-900 border-b border-gray-800 lg:hidden z-50"
-            style={{
-              padding: "10px",
-            }}
-          >
-            <div className="p-4 flex flex-col gap-[20px]">
-              <div className="relative mb-4">
-                <Search
-                  className="absolute  left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  placeholder="Search analytics..."
-                  className="w-full h-[40px] pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  style={{ paddingLeft: "35px" }}
-                />
+              <div className="w-full flex items-center justify-between">
+                <p style={{ fontSize: "12px" }}>Notfication</p>
+                <span style={{ fontSize: "12px", cursor: "pointer" }}>
+                  Clear all
+                </span>
               </div>
-
-              <nav className="space-y-2">
-                <a
-                  href="#"
-                  className="block  px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors duration-200"
-                  style={{
-                    padding: "10px",
-                  }}
-                >
-                  Dashboard
-                </a>
-                <a
-                  href="#"
-                  className="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors duration-200"
-                  style={{
-                    padding: "10px",
-                  }}
-                >
-                  Reports
-                </a>
-                <a
-                  href="#"
-                  className="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors duration-200"
-                  style={{
-                    padding: "10px",
-                  }}
-                >
-                  Settings
-                </a>
-              </nav>
+              {/* contains notification items */}
+              <div>{/* აქ უნდა იყოს შემოსული შეტყობინებები */}</div>
+              {/* footer */}
+              <div className="w-full border-t border-gray-700 flex items-center justify-center">
+                <p style={{ fontSize: "12px", cursor: "pointer" }}>Wiew All</p>
+              </div>
             </div>
+          )}
+          <button className="p-2 cursor-pointer text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-all duration-200">
+            <Settings className="h-5 w-5 cursor-pointer" />
+          </button>
+          <div className="relative inline-block">
+            {/* მთავარი ღილაკი */}
+            <div  onClick={handleUserMenuToggle} className="flex items-center space-x-2 bg-gray-800 rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-700 transition-colors">
+              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                <User className="h-4 w-4 text-white" />
+              </div>
+              <span className="text-white text-sm hidden md:block">
+                John Doe
+              </span>
+              <ChevronDown
+                className={`h-4 w-4 text-gray-400 transition-transform duration-200 `}
+                
+              />
+            </div>
+
+            {/* User Dropdown მენიუ */}
+            {isUserMenuOpen && (
+              <div className="absolute top-13 right-0 w-[200px] bg-gray-800 text-white rounded-lg shadow-lg ring-1 ring-gray-600 ring-opacity-50 z-10">
+                <ul className="flex flex-col gap-[10px] p-4">
+                  <li className="cursor-pointer hover:bg-gray-700 hover:text-gray-100 px-2 py-1 rounded transition-colors">
+                    Profile Settings
+                  </li>
+                  <li className="cursor-pointer hover:bg-gray-700 hover:text-gray-100 px-2 py-1 rounded transition-colors">
+                    Theme
+                  </li>
+                  <li className="cursor-pointer hover:bg-gray-700 hover:text-gray-100 px-2 py-1 rounded transition-colors">
+                    Language
+                  </li>
+                  <li className="cursor-pointer hover:bg-gray-700 hover:text-gray-100 px-2 py-1 rounded transition-colors border-t border-gray-600 pt-2 mt-2">
+                    Logout
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </header>
   );
 };
