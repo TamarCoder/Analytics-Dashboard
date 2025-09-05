@@ -4,6 +4,7 @@ import MetricCard from "../Cards/MetricCard/MetricCard";
 import MetricDetailModal from "../Cards/MetricCard/MetricDetailModal";
 import { useMetricModal } from "../Cards/MetricCard/useMetricModal";
 import { getMetricData } from "../Cards/MetricCard/getMetricData";
+import Chart from "../Cards/Chart/Chart";
 
 const Dashboard = () => {
   const [totalUsers, setTotalUsers] = useState(0);
@@ -97,19 +98,9 @@ const Dashboard = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Static Revenue Card with Modal */}
-          <MetricCard
-            title="Total Revenue (Static)"
-            value="$45,231"
-            change="+20.1%"
-            trend="up"
-            icon={DollarSign}
-            color="bg-blue-600"
-            onClick={() => handleCardClick("revenue")}
-          />
-
           {/* Dynamic API Data Cards */}
           <MetricCard
-            title="Active Users"
+            title="Total Users"
             value={loading ? "Loading..." : totalUsers.toLocaleString()}
             change="+8.2%"
             trend="up"
@@ -119,7 +110,7 @@ const Dashboard = () => {
           />
 
           <MetricCard
-            title="API Revenue"
+            title="Revenue"
             value={loading ? "Loading..." : `$${revenue.toLocaleString()}`}
             change="+8.2%"
             trend="up"
@@ -149,7 +140,10 @@ const Dashboard = () => {
           />
         </div>
 
-        {/* Loading State */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <Chart title="Revenue Trends" />
+            <Chart title="User Activity" />
+          </div>
 
         {/* Stats Summary */}
       </main>
