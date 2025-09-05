@@ -1,16 +1,14 @@
 "use client";
-import { useState } from "react";
-import Header from "../Header/Header";
- 
+import { useState, useEffect } from "react";
+import Sidebar from "../Sidebar/Sidebar";
+import { BrowserRouter } from "react-router-dom";
 
 const App = () => {
   const [theme, setTheme] = useState("dark");
 
-   
-
   return (
-    <div className={`min-h-screen h-[300px] bg-gray-950 ${theme}`}>
-      <Header/>
+    <div className={` bg-gray-950 ${theme}`}>
+      <div></div>
     </div>
   );
 };

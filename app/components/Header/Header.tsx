@@ -1,163 +1,243 @@
 "use client";
 import React, { useState } from "react";
-import { Bell, Search, Settings, User, Menu, X } from "lucide-react";
+import {
+  BarChart3,
+  Bell,
+  Search,
+  Settings,
+  User,
+  ChevronDown,
+  Menu,
+  TrendingUp,
+  Users,
+  DollarSign,
+  ShoppingCart,
+  Target,
+  Activity,
+} from "lucide-react";
+import Realtime from "./RealTime/Realtime";
+import { useRouter, usePathname } from "next/navigation"; // Next.js router
+import { MenuItem } from "../types/dashboard.types";
 
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+const Header: React.FC = () => {
+  const [isSearchText, setIsSearchText] = useState("");
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  // Next.js router hooks
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    setIsSearchText(e.target.value);
   };
 
-  const handleSearchChange = (e: any) => {
-    setSearchQuery(e.target.value);
+  const handleNotificationToggle = () => {
+    setIsNotificationOpen(!isNotificationOpen);
   };
+
+  const handleUserMenuToggle = () => {
+    setIsUserMenuOpen(!isUserMenuOpen);
+  };
+
+  const handleMobileMenuToggle = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Navigation handler ფუნქცია
+  const handleNavigation = (path: string) => {
+    router.push(path);
+    setIsMobileMenuOpen(false); // მობაილ მენიუს დახურვა
+  };
+
+  // Active state checker
+  const isActiveRoute = (path: string) => {
+    return pathname === path;
+  };
+
+  const menuItems: MenuItem[] = [
+    { icon: BarChart3, label: "Dashboard", path: "/dashboard" },
+    { icon: TrendingUp, label: "Analytics", path: "/analytics" },
+    { icon: Users, label: "Users", path: "/users" },
+    { icon: DollarSign, label: "Revenue", path: "/revenue" },
+    { icon: ShoppingCart, label: "Orders", path: "/orders" },
+    { icon: Target, label: "Goals", path: "/goals" },
+    { icon: Activity, label: "Reports", path: "/reports" },
+    { icon: Settings, label: "Settings", path: "/settings" },
+  ];
 
   return (
-    <header
-      className="bg-gray-900 border-b border-gray-800 px-4 lg:px-6 h-20 flex items-center justify-between relative z-50"
-      style={{ padding: "24px" }}
-    >
-      <div className="flex gap-[10px] items-center space-x-4 ">
-        <button
-          onClick={toggleMenu}
-          className="lg:hidden p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition-colors duration-200"
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+    <>
+      <header className="bg-gray-900 border-b border-gray-700 px-6 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo and title */}
+          <div className="flex items-center space-x-3">
+            <div className="flex md:flex lg:hidden bg-gray-800 rounded-lg px-2 py-1 cursor-pointer hover:bg-gray-700 transition-colors">
+              <Menu
+                className="flex md:flex lg:hidden items-center max-w-md cursor-pointer h-5 w-5 text-white"
+                onClick={handleMobileMenuToggle}
+              />
+            </div>
 
-        <div className="flex gap-[10px] items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">A</span>
+            <div className="flex items-center space-x-3">
+              <BarChart3 className="h-6 w-6 text-white cursor-pointer" />
+            </div>
+
+            <div className="flex flex-col gap-[3px]">
+              <h1 className="text-xl font-bold text-white">
+                Analytics Dashboard
+              </h1>
+              <Realtime />
+            </div>
           </div>
-          <h1 className="text-xl font-semibold text-white hidden sm:block">
-            Analytics
-          </h1>
-        </div>
-      </div>
 
-      <div className="hidden md:flex flex-2 max-w-lg mx-8">
-        <div className="relative w-full">
-         
-          <Search
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10 pointer-events-none"
-            size={20}
-          />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            placeholder="Search analytics..."
-            className="w-full h-[40px] pl-12 pr-10 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-            style={{
-              paddingLeft: "35px",
-            }}
-          />
-          {/* თუ რამე იწერება, ვაჩვენებთ გასუფთავების ღილაკს */}
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-            >
-              <X size={16} />
+          {/* Search bar */}
+          <div className="hidden md:flex items-center bg-gray-800 rounded-lg px-4 py-2 max-w-md flex-1 mx-8">
+            <Search className="h-5 w-5 text-gray-400 mr-3 cursor-pointer" />
+            <input
+              onChange={handleSearchChange}
+              value={isSearchText}
+              type="text"
+              placeholder="Search metrics, reports..."
+              className="bg-transparent text-white placeholder-gray-400 flex-1 outline-none"
+            />
+          </div>
+
+          {/* Actions */}
+          <div className="flex items-center space-x-4">
+            <div className="relative">
+              <button
+                onClick={handleNotificationToggle}
+                className="p-2 cursor-pointer text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-all duration-200"
+              >
+                <Bell className="h-5 w-5" />
+              </button>
+
+              {/* Notifications dropdown */}
+              {isNotificationOpen && (
+                <div className="absolute right-0 top-12 w-64 bg-gray-800 text-white rounded-lg shadow-lg z-50 ring-1 ring-gray-600">
+                  <div className="p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-xs font-medium">Notifications</p>
+                      <span className="text-xs cursor-pointer text-blue-400 hover:text-blue-300">
+                        Clear all
+                      </span>
+                    </div>
+
+                    {/* Notification items */}
+                    <div className="space-y-2">
+                      <div className="text-xs text-gray-400 text-center py-4">
+                        No new notifications
+                      </div>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="border-t border-gray-700 pt-2 mt-2 text-center">
+                      <p className="text-xs cursor-pointer text-blue-400 hover:text-blue-300">
+                        View All
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <button className="p-2 cursor-pointer text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-all duration-200">
+              <Settings className="h-5 w-5" />
             </button>
-          )}
-        </div>
-      </div>
 
-      <div className="flex gap-[20px] items-center space-x-3">
-        {/* შეტყობინებების ღილაკი */}
-        <button className="relative p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition-colors duration-200">
-          <Bell size={20} className="cursor-pointer" />
-          <span className="absolute top-[-3px] right-0 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
-        </button>
-
-        {/* პარამეტრების ღილაკი */}
-        <button className="p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition-colors duration-200">
-          <Settings size={20} className="cursor-pointer" />
-        </button>
-
-        {/* მომხმარებლის პროფილი */}
-        <div className="flex gap-[20px] items-center space-x-3 pl-3   border-gray-700">
-          <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center">
-            <User size={16} className="text-white cursor-pointer" />
-          </div>
-          <div className="hidden lg:block cursor-pointer">
-            <p className="text-sm font-medium text-white  cursor-pointer">
-              John Doe
-            </p>
-            <p className="text-xs text-gray-400 cursor-pointer">Admin</p>
-          </div>
-        </div>
-      </div>
-
-      {/* მობილური მენიუ - ჩანს მხოლოდ მობილურზე და მენიუს გახსნისას */}
-      {isMenuOpen && (
-        <>
-          <div
-            className="fixed inset-0   bg-opacity-50 lg:hidden z-40"
-            onClick={toggleMenu}
-          ></div>
-
-          {/* მენიუ */}
-          <div
-            className="absolute top-full   gap-[20px] left-0 right-0 bg-gray-900 border-b border-gray-800 lg:hidden z-50"
-            style={{
-              padding: "10px",
-            }}
-          >
-            <div className="p-4 flex flex-col gap-[20px]">
-              <div className="relative mb-4">
-                <Search
-                  className="absolute  left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  placeholder="Search analytics..."
-                  className="w-full h-[40px] pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  style={{ paddingLeft: "35px" }}
+            <div className="relative inline-block">
+              {/* User menu button */}
+              <div
+                onClick={handleUserMenuToggle}
+                className="flex items-center space-x-2 bg-gray-800 rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-700 transition-colors"
+              >
+                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                  <User className="h-4 w-4 text-white" />
+                </div>
+                <span className="text-white text-sm hidden md:block">
+                  John Doe
+                </span>
+                <ChevronDown
+                  className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${
+                    isUserMenuOpen ? "rotate-180" : ""
+                  }`}
                 />
               </div>
 
-              <nav className="space-y-2">
-                <a
-                  href="#"
-                  className="block  px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors duration-200"
-                  style={{
-                    padding: "10px",
-                  }}
-                >
-                  Dashboard
-                </a>
-                <a
-                  href="#"
-                  className="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors duration-200"
-                  style={{
-                    padding: "10px",
-                  }}
-                >
-                  Reports
-                </a>
-                <a
-                  href="#"
-                  className="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors duration-200"
-                  style={{
-                    padding: "10px",
-                  }}
-                >
-                  Settings
-                </a>
-              </nav>
+              {/* User Dropdown menu */}
+              {isUserMenuOpen && (
+                <div className="absolute top-12 right-0 w-[200px] bg-gray-800 text-white rounded-lg shadow-lg ring-1 ring-gray-600 ring-opacity-50 z-10">
+                  <ul className="flex flex-col gap-[10px] p-4">
+                    <li className="cursor-pointer hover:bg-gray-700 hover:text-gray-100 px-2 py-1 rounded transition-colors">
+                      Profile Settings
+                    </li>
+                    <li className="cursor-pointer hover:bg-gray-700 hover:text-gray-100 px-2 py-1 rounded transition-colors">
+                      Theme
+                    </li>
+                    <li className="cursor-pointer hover:bg-gray-700 hover:text-gray-100 px-2 py-1 rounded transition-colors">
+                      Language
+                    </li>
+                    <li className="cursor-pointer hover:bg-gray-700 hover:text-gray-100 px-2 py-1 rounded transition-colors border-t border-gray-600 pt-2 mt-2">
+                      Logout
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
-        </>
-      )}
-    </header>
+        </div>
+      </header>
+
+      {/* Mobile Menu */}
+      <div
+        className={`bg-gray-800 w-full flex flex-col md:flex lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+          isMobileMenuOpen
+            ? "h-auto opacity-100 translate-y-0"
+            : "h-0 opacity-0 -translate-y-4"
+        }`}
+      >
+        <div
+          className=" w-full h-[50px]  flex items-center  bg-gray-800 rounded-lg  "
+          style={{ paddingLeft: "10px", paddingRight: "10px" }}
+        >
+          <Search className="h-5 w-5 text-gray-400 mr-3 cursor-pointer" />
+          <input
+            onChange={handleSearchChange}
+            value={isSearchText}
+            type="text"
+            placeholder="Search metrics, reports..."
+            className="bg-transparent text-white placeholder-gray-400 flex-1 outline-none border-b"
+          />
+        </div>
+        <nav className="w-full p-4 space-y-2">
+          {menuItems.map((item, index) => {
+            const isActive = isActiveRoute(item.path);
+
+            return (
+              <button
+                key={index}
+                onClick={() => handleNavigation(item.path)}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 group text-left ${
+                  isActive
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-400 hover:text-white hover:bg-gray-700"
+                }`}
+              >
+                <item.icon
+                  className={`h-5 w-5 ${
+                    isActive ? "text-white" : "group-hover:text-blue-400"
+                  }`}
+                />
+                <span className="font-medium">{item.label}</span>
+              </button>
+            );
+          })}
+        </nav>
+      </div>
+    </>
   );
 };
 
