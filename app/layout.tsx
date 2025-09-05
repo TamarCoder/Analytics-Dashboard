@@ -32,8 +32,7 @@ export default function RootLayout({
         <div className="  bg-gray-950">
           <Header/>
           {/* Main Content Area */}
-          <div className=" flex flex-col">
-           
+          <div className=" flex">
             <Sidebar />
             {/* Main Content */}
             <main className="flex-1">{children}</main>
