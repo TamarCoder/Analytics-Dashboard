@@ -111,3 +111,10 @@ export interface DashboardState {
   trafficSources: TrafficSource[];
   deviceData: DeviceData[];
 }
+
+
+ export interface SubMenuItem {
+  label: string;
+  path: string;
+  icon?: React.ElementType;
+}
