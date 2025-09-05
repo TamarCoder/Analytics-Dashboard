@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { MetricData } from '../Cards/MetricCard/useMetricModal';
 
 // Common Types
 export interface BaseProps {
@@ -6,14 +7,7 @@ export interface BaseProps {
   children?: ReactNode;
 }
 
-// Metric Card Types
-export interface MetricData {
-  title: string;
-  value: string;
-  change: number;
-  icon: React.ElementType;
-  color: string;
-}
+ 
 
 export interface MetricCardProps extends BaseProps {
   title: string;
