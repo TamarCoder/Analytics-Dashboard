@@ -13,6 +13,8 @@ const Dashboard = () => {
   const [conversion, setConversion] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  
   const { isOpen, selectedMetric, openModal, closeModal } = useMetricModal();
 
   const fetchMetrics = async () => {
@@ -53,7 +55,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchMetrics();
-    const interval = setInterval(fetchMetrics, 30000); // 30 წამი, 10 წამი ზედმეტად ხშირია
+    const interval = setInterval(fetchMetrics, 30000);  
     return () => clearInterval(interval);
   }, []);
 
@@ -97,8 +99,7 @@ const Dashboard = () => {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {/* Static Revenue Card with Modal */}
-          {/* Dynamic API Data Cards */}
+        
           <MetricCard
             title="Total Users"
             value={loading ? "Loading..." : totalUsers.toLocaleString()}
