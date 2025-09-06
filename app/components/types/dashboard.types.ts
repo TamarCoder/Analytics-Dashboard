@@ -48,13 +48,15 @@ export interface TrafficSource {
   change?: number;
 }
 
-// Device Analytics Types
+// Device Analytics Type;
 export interface DeviceData {
+  id:string;
   name: string;
   value: number;
   icon: React.ElementType;
   color: string;
   change?: number;
+  
 }
 
 // Quick Actions Types

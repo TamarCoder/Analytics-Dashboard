@@ -5,6 +5,9 @@ import MetricDetailModal from "../Cards/MetricCard/MetricDetailModal";
 import { useMetricModal } from "../Cards/MetricCard/useMetricModal";
 import { getMetricData } from "../Cards/MetricCard/getMetricData";
 import ChartComponent from "../Cards/ChartComponent/ChartComponent";
+import TrafficSources from "../Cards/TrafficSources/TrafficSources";
+import DeviceAnalytics from "../Cards/DeviceAnalytics/DeviceAnalytics";
+import QuickActions from "../Cards/QuickActions/QuickActions";
 
 const Dashboard = () => {
   const [totalUsers, setTotalUsers] = useState(0);
@@ -146,7 +149,11 @@ const Dashboard = () => {
           <ChartComponent title="User Activity" />  
         </div>
 
-        {/* Stats Summary */}
+         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+           <TrafficSources/>
+           <DeviceAnalytics/>
+           <QuickActions/>
+         </div>
       </main>
 
       {/* Modal - Only show when open */}

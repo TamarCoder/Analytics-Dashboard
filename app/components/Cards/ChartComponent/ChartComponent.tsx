@@ -34,6 +34,7 @@ const ChartComponent: React.FC<ChartProps> = ({ title, children }) => {
           </div>
         );
     }
+          
   };
 
   const refreshPage = () => {
@@ -41,7 +42,7 @@ const ChartComponent: React.FC<ChartProps> = ({ title, children }) => {
   };
 
   return (
-    <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
+    <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 cursor-pointer  hover:border-blue-500 transition-all duration-300">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-white">{title}</h3>
         <div className="flex items-center space-x-2">

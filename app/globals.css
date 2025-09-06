@@ -33,6 +33,10 @@ body {
   line-height: 1.5;
 }
 
+button{
+  cursor: pointer;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

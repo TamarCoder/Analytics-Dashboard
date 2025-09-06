@@ -10,7 +10,7 @@ interface ChartProps {
 const RevenueTrendsArea: React.FC<ChartProps> = ({ title, children }) => {
   return (
     <div className="w-full h-full ">
-      <div className="w-full h-64">
+      <div className="w-full h-64 ">
           <RevenueChart/>
       </div>
     </div>
