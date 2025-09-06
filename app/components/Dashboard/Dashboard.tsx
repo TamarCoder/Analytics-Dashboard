@@ -4,7 +4,7 @@ import MetricCard from "../Cards/MetricCard/MetricCard";
 import MetricDetailModal from "../Cards/MetricCard/MetricDetailModal";
 import { useMetricModal } from "../Cards/MetricCard/useMetricModal";
 import { getMetricData } from "../Cards/MetricCard/getMetricData";
-import Chart from "../Cards/Chart/Chart";
+import ChartComponent from "../ChartComponent/ChartComponent";
 
 const Dashboard = () => {
   const [totalUsers, setTotalUsers] = useState(0);
@@ -141,9 +141,9 @@ const Dashboard = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <Chart title="Revenue Trends" />
-            <Chart title="User Activity" />
-          </div>
+          <ChartComponent title="Revenue Trends" /> 
+          <ChartComponent title="User Activity" />  
+        </div>
 
         {/* Stats Summary */}
       </main>
