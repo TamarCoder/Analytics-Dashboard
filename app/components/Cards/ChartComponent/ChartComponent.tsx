@@ -36,6 +36,10 @@ const ChartComponent: React.FC<ChartProps> = ({ title, children }) => {
     }
   };
 
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
   return (
     <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
       <div className="flex items-center justify-between mb-6">
@@ -48,7 +52,7 @@ const ChartComponent: React.FC<ChartProps> = ({ title, children }) => {
             <Download className="h-4 w-4" />
           </button>
           <button className="p-2 cursor-pointer text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-all duration-200">
-            <RefreshCw className="h-4 w-4" />
+            <RefreshCw className="h-4 w-4" onClick={refreshPage} />
           </button>
         </div>
       </div>

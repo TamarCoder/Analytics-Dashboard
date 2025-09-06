@@ -4,7 +4,7 @@ import MetricCard from "../Cards/MetricCard/MetricCard";
 import MetricDetailModal from "../Cards/MetricCard/MetricDetailModal";
 import { useMetricModal } from "../Cards/MetricCard/useMetricModal";
 import { getMetricData } from "../Cards/MetricCard/getMetricData";
-import ChartComponent from "../ChartComponent/ChartComponent";
+import ChartComponent from "../Cards/ChartComponent/ChartComponent";
 
 const Dashboard = () => {
   const [totalUsers, setTotalUsers] = useState(0);
@@ -55,7 +55,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchMetrics();
-    const interval = setInterval(fetchMetrics, 30000);  
+    const interval = setInterval(fetchMetrics, 10000);  
     return () => clearInterval(interval);
   }, []);
 
